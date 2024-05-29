@@ -28,7 +28,10 @@ type PathSegment struct {
 }
 
 func (s PathSegment) Direction() Direction {
-	return s.Length >= 0
+	if s.Length >= 0 {
+		return ForwardDirection
+	}
+	return BackwardDirection
 }
 
 type Path struct {
