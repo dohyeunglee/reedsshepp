@@ -169,3 +169,22 @@ func TestPath_Interpolate(t *testing.T) {
 	fmt.Println(states)
 	fmt.Println(len(states))
 }
+
+func BenchmarkMinLengthPath(b *testing.B) {
+	start := reedsshepp.State{
+		X:   0,
+		Y:   0,
+		Yaw: 0,
+	}
+	goal := reedsshepp.State{
+		X:   0,
+		Y:   0,
+		Yaw: math.Pi,
+	}
+	turningRadius := 5.8
+
+	for i := 0; i < b.N; i++ {
+		path, _ := reedsshepp.MinLengthPath(start, goal, turningRadius)
+		_ = path.Length()
+	}
+}
