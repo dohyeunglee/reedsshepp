@@ -1,7 +1,6 @@
 package reedsshepp_test
 
 import (
-	"fmt"
 	"math"
 	"testing"
 
@@ -166,8 +165,7 @@ func TestPath_Interpolate(t *testing.T) {
 	states := path.Interpolate(stepSize)
 
 	// THEN
-	fmt.Println(states)
-	fmt.Println(len(states))
+	assert.Equal(t, 183, len(states))
 }
 
 func BenchmarkMinLengthPath(b *testing.B) {
