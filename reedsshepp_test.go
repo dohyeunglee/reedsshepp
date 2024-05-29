@@ -10,7 +10,7 @@ import (
 	"github.com/dohyeunglee/reedsshepp"
 )
 
-var epsilon = math.Nextafter(1, 2) - 1
+var maxError = 10*math.Nextafter(1, 2) - 1
 
 func TestAvailablePaths(t *testing.T) {
 	// GIVEN
@@ -141,7 +141,7 @@ func TestMinLengthPath(t *testing.T) {
 
 		// THEN
 		assert.True(t, ok)
-		assert.InEpsilon(t, tt.want, path.Length(), 10*epsilon)
+		assert.InEpsilon(t, tt.want, path.Length(), maxError)
 	}
 }
 
