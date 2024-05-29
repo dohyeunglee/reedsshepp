@@ -8,7 +8,7 @@ go get github.com/dohyeunglee/reedsshepp
 ```
 
 ## API
-WIP
+Visit https://pkg.go.dev/github.com/dohyeunglee/reedsshepp
 
 ## Test
 ```bash
