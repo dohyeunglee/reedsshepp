@@ -1,7 +1,10 @@
 /*********************************************************************
 * Software License Agreement (BSD License)
 *
-*  Copyright (c) 2010, Rice University
+*  The Open Motion Planning Library (OMPL) is released as Open Source
+*  under the terms of a 3-clause BSD license.
+
+*  Copyright (c) 2010-2014, Rice University
 *  All rights reserved.
 *
 *  Redistribution and use in source and binary forms, with or without
@@ -37,6 +40,8 @@ package reedsshepp
 import (
 	"math"
 )
+
+// The comments, variable names, etc. use the nomenclature from the Reeds-Shepp paper.
 
 const (
 	twoPi  = 2 * math.Pi
@@ -78,6 +83,7 @@ func reedsSheppPaths(x float64, y float64, phi float64) []Path {
 	return paths
 }
 
+// lpSpLp is based on formula 8.1 in Reeds-Shepp paper.
 func lpSpLp(x float64, y float64, phi float64) (t float64, u float64, v float64, ok bool) {
 	u, t = polar(x-math.Sin(phi), y-1+math.Cos(phi))
 	if t >= -zero {
@@ -93,6 +99,7 @@ func lpSpLp(x float64, y float64, phi float64) (t float64, u float64, v float64,
 	return
 }
 
+// lpSpRp is based on formula 8.2 in Reeds-Shepp paper.
 func lpSpRp(x float64, y float64, phi float64) (t float64, u float64, v float64, ok bool) {
 	u1, t1 := polar(x+math.Sin(phi), y-1-math.Cos(phi))
 	u1 = u1 * u1
@@ -142,6 +149,7 @@ func csc(x float64, y float64, phi float64) []Path {
 	return paths
 }
 
+// lpRmL is based on formula 8.3 / 8.4 in Reeds-Shepp paper. *** TYPO IN PAPER ***
 func lpRmL(x float64, y float64, phi float64) (t float64, u float64, v float64, ok bool) {
 	xi := x - math.Sin(phi)
 	eta := y - 1 + math.Cos(phi)
@@ -194,6 +202,7 @@ func ccc(x float64, y float64, phi float64) []Path {
 	return paths
 }
 
+// lpRupLumRm is based on formula 8.7 in Reeds-Shepp paper.
 func lpRupLumRm(x float64, y float64, phi float64) (t float64, u float64, v float64, ok bool) {
 	xi := x + math.Sin(phi)
 	eta := y - 1 - math.Cos(phi)
@@ -210,6 +219,7 @@ func lpRupLumRm(x float64, y float64, phi float64) (t float64, u float64, v floa
 	return
 }
 
+// lpRumLumRp is based on formula 8.8 in Reeds-Shepp paper.
 func lpRumLumRp(x float64, y float64, phi float64) (t float64, u float64, v float64, ok bool) {
 	xi := x + math.Sin(phi)
 	eta := y - 1 - math.Cos(phi)
@@ -256,6 +266,7 @@ func cccc(x float64, y float64, phi float64) []Path {
 	return paths
 }
 
+// lpRmSmLm is based on formula 8.9 in Reeds-Shepp paper.
 func lpRmSmLm(x float64, y float64, phi float64) (t float64, u float64, v float64, ok bool) {
 	xi := x - math.Sin(phi)
 	eta := y - 1 + math.Cos(phi)
@@ -274,6 +285,7 @@ func lpRmSmLm(x float64, y float64, phi float64) (t float64, u float64, v float6
 	return
 }
 
+// lpRmSmRm is based on formula 8.10 in Reeds-Shepp paper.
 func lpRmSmRm(x float64, y float64, phi float64) (t float64, u float64, v float64, ok bool) {
 	xi := x + math.Sin(phi)
 	eta := y - 1 - math.Cos(phi)
@@ -352,6 +364,7 @@ func ccsc(x float64, y float64, phi float64) []Path {
 	return paths
 }
 
+// lpRmSLmRp is based on formula 8.11 in Reeds-Shepp paper. *** TYPO IN PAPER ***
 func lpRmSLmRp(x float64, y float64, phi float64) (t float64, u float64, v float64, ok bool) {
 	xi := x + math.Sin(phi)
 	eta := y - 1 - math.Cos(phi)

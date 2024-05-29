@@ -7,6 +7,9 @@
 go get github.com/dohyeunglee/reedsshepp
 ```
 
+## API
+WIP
+
 ## Test
 ```bash
 go test
@@ -16,7 +19,7 @@ go test
 A demo is available in [demo/main.go](demo/main.go)
 
 ## Benchmark
-WIP
-
-## API
+```bash
+go test -bench .
+```
 WIP

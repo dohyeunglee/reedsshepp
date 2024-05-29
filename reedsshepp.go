@@ -1,9 +1,11 @@
+// Package reedsshepp implements ReedsSheppPath planning based on [ompl](https://github.com/ompl/ompl) library.
 package reedsshepp
 
 import (
 	"math"
 )
 
+// Direction represents path's direction: forward or backward.
 type Direction bool
 
 const (
@@ -11,6 +13,7 @@ const (
 	BackwardDirection Direction = false
 )
 
+// PathCourseType represents ReedsSheppPath segment course type: L, S, R.
 type PathCourseType int
 
 const (
@@ -20,12 +23,14 @@ const (
 	CourseTypeRight
 )
 
+// State represents the 3D state, x, y coordinate and yaw angle.
 type State struct {
 	X   float64
 	Y   float64
 	Yaw float64
 }
 
+// StateWithDirection represents `State` information with `Direction` information
 type StateWithDirection struct {
 	State
 	Direction Direction
@@ -36,6 +41,7 @@ type PathSegment struct {
 	CourseType PathCourseType
 }
 
+// Direction returns `Direction` information(forward or backward) about the segment.
 func (s PathSegment) Direction() Direction {
 	if s.Length >= 0 {
 		return ForwardDirection
@@ -43,6 +49,7 @@ func (s PathSegment) Direction() Direction {
 	return BackwardDirection
 }
 
+// Path corresponds to ReedsSheppPath.
 type Path struct {
 	t                float64
 	u                float64
@@ -58,14 +65,17 @@ type Path struct {
 	origin State
 }
 
+// Length returns the total length of ReedsSheppPath.
 func (p *Path) Length() float64 {
 	return p.totalLength
 }
 
+// Segments returns all `PathSegment` information about ReedsSheppPath.
 func (p *Path) Segments() []PathSegment {
 	return p.segments
 }
 
+// Interpolate interpolates ReedsSheppPath by `stepSize`, returning `StateWithDirection` list.
 func (p *Path) Interpolate(stepSize float64) []StateWithDirection {
 	states := make([]StateWithDirection, 0)
 
@@ -76,6 +86,12 @@ func (p *Path) Interpolate(stepSize float64) []StateWithDirection {
 	return states
 }
 
+// IsZero checks whether `Path` is default(zero) value.
+func (p *Path) IsZero() bool {
+	return len(p.segments) == 0
+}
+
+// stateAtDistance returns the state which is `distance` far from `start` state.
 func (p *Path) stateAtDistance(start State, distance float64) StateWithDirection {
 	if distance <= 0 {
 		return StateWithDirection{
@@ -174,6 +190,9 @@ func stateAtDistance(start State, deltaDistance float64, courseType PathCourseTy
 	}
 }
 
+// MinLengthPath returns the shortest `ReedsSheppPath` among all possible paths from the `start` state to the `goal` state, given a `turningRadius`.
+// In case there are multiple paths with the same length, one of them is randomly selected and returned.
+// The shortest ReedsSheppPath length can be obtained using the `Length` function of the returned `ReedsSheppPath`.
 func MinLengthPath(start State, goal State, turningRadius float64) (Path, bool) {
 	paths := AvailablePaths(start, goal, turningRadius)
 	if len(paths) == 0 {
@@ -194,6 +213,7 @@ func MinLengthPath(start State, goal State, turningRadius float64) (Path, bool) 
 	return bestPath, true
 }
 
+// AvailablePaths returns all possible ReedsSheppPaths that can reach the `goal` state from the `start` state, given a `turningRadius`.
 func AvailablePaths(start State, goal State, turningRadius float64) []Path {
 	dx := goal.X - start.X
 	dy := goal.Y - start.Y
