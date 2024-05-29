@@ -47,34 +47,25 @@ var (
 	epsilon         = math.Nextafter(1, 2) - 1 // C++ std::numeric_limits<double>::epsilon()
 	zero            = 10 * epsilon
 	pathCourseTypes = [18][5]PathCourseType{
-		{CourseLeft, CourseRight, CourseLeft, CourseNone, CourseNone},      // 0
-		{CourseRight, CourseLeft, CourseRight, CourseNone, CourseNone},     // 1
-		{CourseLeft, CourseRight, CourseLeft, CourseRight, CourseNone},     // 2
-		{CourseRight, CourseLeft, CourseRight, CourseLeft, CourseNone},     // 3
-		{CourseLeft, CourseRight, CourseStraight, CourseLeft, CourseNone},  // 4
-		{CourseRight, CourseLeft, CourseStraight, CourseRight, CourseNone}, // 5
-		{CourseLeft, CourseStraight, CourseRight, CourseLeft, CourseNone},  // 6
-		{CourseRight, CourseStraight, CourseLeft, CourseRight, CourseNone}, // 7
-		{CourseLeft, CourseRight, CourseStraight, CourseRight, CourseNone}, // 8
-		{CourseRight, CourseLeft, CourseStraight, CourseLeft, CourseNone},  // 9
-		{CourseRight, CourseStraight, CourseRight, CourseLeft, CourseNone}, // 10
-		{CourseLeft, CourseStraight, CourseLeft, CourseRight, CourseNone},  // 11
-		{CourseLeft, CourseStraight, CourseRight, CourseNone, CourseNone},  // 12
-		{CourseRight, CourseStraight, CourseLeft, CourseNone, CourseNone},  // 13
-		{CourseLeft, CourseStraight, CourseLeft, CourseNone, CourseNone},   // 14
-		{CourseRight, CourseStraight, CourseRight, CourseNone, CourseNone}, // 15
-		{CourseLeft, CourseRight, CourseStraight, CourseLeft, CourseRight}, // 16
-		{CourseRight, CourseLeft, CourseStraight, CourseRight, CourseLeft}, // 17
+		{CourseTypeLeft, CourseTypeRight, CourseTypeLeft, CourseTypeNone, CourseTypeNone},      // 0
+		{CourseTypeRight, CourseTypeLeft, CourseTypeRight, CourseTypeNone, CourseTypeNone},     // 1
+		{CourseTypeLeft, CourseTypeRight, CourseTypeLeft, CourseTypeRight, CourseTypeNone},     // 2
+		{CourseTypeRight, CourseTypeLeft, CourseTypeRight, CourseTypeLeft, CourseTypeNone},     // 3
+		{CourseTypeLeft, CourseTypeRight, CourseTypeStraight, CourseTypeLeft, CourseTypeNone},  // 4
+		{CourseTypeRight, CourseTypeLeft, CourseTypeStraight, CourseTypeRight, CourseTypeNone}, // 5
+		{CourseTypeLeft, CourseTypeStraight, CourseTypeRight, CourseTypeLeft, CourseTypeNone},  // 6
+		{CourseTypeRight, CourseTypeStraight, CourseTypeLeft, CourseTypeRight, CourseTypeNone}, // 7
+		{CourseTypeLeft, CourseTypeRight, CourseTypeStraight, CourseTypeRight, CourseTypeNone}, // 8
+		{CourseTypeRight, CourseTypeLeft, CourseTypeStraight, CourseTypeLeft, CourseTypeNone},  // 9
+		{CourseTypeRight, CourseTypeStraight, CourseTypeRight, CourseTypeLeft, CourseTypeNone}, // 10
+		{CourseTypeLeft, CourseTypeStraight, CourseTypeLeft, CourseTypeRight, CourseTypeNone},  // 11
+		{CourseTypeLeft, CourseTypeStraight, CourseTypeRight, CourseTypeNone, CourseTypeNone},  // 12
+		{CourseTypeRight, CourseTypeStraight, CourseTypeLeft, CourseTypeNone, CourseTypeNone},  // 13
+		{CourseTypeLeft, CourseTypeStraight, CourseTypeLeft, CourseTypeNone, CourseTypeNone},   // 14
+		{CourseTypeRight, CourseTypeStraight, CourseTypeRight, CourseTypeNone, CourseTypeNone}, // 15
+		{CourseTypeLeft, CourseTypeRight, CourseTypeStraight, CourseTypeLeft, CourseTypeRight}, // 16
+		{CourseTypeRight, CourseTypeLeft, CourseTypeStraight, CourseTypeRight, CourseTypeLeft}, // 17
 	}
-)
-
-type PathCourseType int
-
-const (
-	CourseNone PathCourseType = iota
-	CourseLeft
-	CourseStraight
-	CourseRight
 )
 
 func reedsSheppPaths(x float64, y float64, phi float64) []Path {

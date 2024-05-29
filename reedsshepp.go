@@ -11,6 +11,15 @@ const (
 	BackwardDirection Direction = false
 )
 
+type PathCourseType int
+
+const (
+	CourseTypeNone PathCourseType = iota
+	CourseTypeLeft
+	CourseTypeStraight
+	CourseTypeRight
+)
+
 type State struct {
 	X   float64
 	Y   float64
@@ -118,7 +127,7 @@ func (p *Path) setTurningRadius(turningRadius float64) {
 
 	p.segments = make([]PathSegment, 0, len(courseTypes))
 	for i := 0; i < len(courseTypes); i++ {
-		if courseTypes[i] == CourseNone {
+		if courseTypes[i] == CourseTypeNone {
 			break
 		}
 
@@ -143,15 +152,15 @@ func stateAtDistance(start State, deltaDistance float64, courseType PathCourseTy
 	phi := deltaDistance / turningRadius
 
 	switch courseType {
-	case CourseLeft:
+	case CourseTypeLeft:
 		deltaX = turningRadius*math.Sin(start.Yaw+phi) - turningRadius*math.Sin(start.Yaw)
 		deltaY = turningRadius*-math.Cos(start.Yaw+phi) + turningRadius*math.Cos(start.Yaw)
 		deltaYaw = phi
-	case CourseRight:
+	case CourseTypeRight:
 		deltaX = turningRadius*-math.Sin(start.Yaw-phi) + turningRadius*math.Sin(start.Yaw)
 		deltaY = turningRadius*math.Cos(start.Yaw-phi) - turningRadius*math.Cos(start.Yaw)
 		deltaYaw = -phi
-	case CourseStraight:
+	case CourseTypeStraight:
 		deltaX = deltaDistance * math.Cos(start.Yaw)
 		deltaY = deltaDistance * math.Sin(start.Yaw)
 	default:
