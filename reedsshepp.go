@@ -268,9 +268,14 @@ func AvailablePaths(start State, goal State, turningRadius float64) []Path {
 	}
 
 	paths := reedsSheppPaths(x/turningRadius, y/turningRadius, dth)
-	for i := range paths {
-		paths[i].setTurningRadius(turningRadius)
-		paths[i].origin = start
+	result := make([]Path, 0, len(paths))
+	for _, path := range paths {
+		path.setTurningRadius(turningRadius)
+		if path.IsZero() {
+			continue
+		}
+		path.origin = start
+		result = append(result, path)
 	}
-	return paths
+	return result
 }
