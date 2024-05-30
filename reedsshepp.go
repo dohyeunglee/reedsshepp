@@ -183,6 +183,7 @@ func (p *Path) setTurningRadius(turningRadius float64) {
 	}
 }
 
+// stateAtDistance is based on formula 3.2 in Reeds-Shepp paper.
 func stateAtDistance(start State, deltaDistance float64, courseType PathCourseType, turningRadius float64) State {
 	if deltaDistance == 0 {
 		return start
