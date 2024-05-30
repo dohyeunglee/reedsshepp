@@ -2,6 +2,7 @@
 package reedsshepp
 
 import (
+	"fmt"
 	"math"
 )
 
@@ -13,6 +14,15 @@ const (
 	BackwardDirection Direction = false
 )
 
+func (d Direction) String() string {
+	switch d {
+	case ForwardDirection:
+		return "Forward"
+	default:
+		return "Backward"
+	}
+}
+
 // PathCourseType represents ReedsSheppPath segment course type: L, S, R.
 type PathCourseType int
 
@@ -22,6 +32,19 @@ const (
 	CourseTypeStraight
 	CourseTypeRight
 )
+
+func (t PathCourseType) String() string {
+	switch t {
+	case CourseTypeLeft:
+		return "L"
+	case CourseTypeStraight:
+		return "S"
+	case CourseTypeRight:
+		return "R"
+	default:
+		return "None"
+	}
+}
 
 // State represents the 3D state, x, y coordinate and yaw angle.
 type State struct {
@@ -39,6 +62,10 @@ type StateWithDirection struct {
 type PathSegment struct {
 	Length     float64
 	CourseType PathCourseType
+}
+
+func (s PathSegment) String() string {
+	return fmt.Sprintf("%v(%s)", s.Length, s.CourseType.String())
 }
 
 // Direction returns `Direction` information(forward or backward) about the segment.
