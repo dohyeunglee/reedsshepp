@@ -115,7 +115,7 @@ func (p *Path) Interpolate(stepSize float64) []StateWithDirection {
 	states := make([]StateWithDirection, 0)
 
 	for distance := 0.0; distance <= p.Length(); distance += stepSize {
-		states = append(states, p.stateAtDistance(p.origin, distance))
+		states = append(states, p.sample(distance))
 	}
 
 	return states
@@ -126,11 +126,11 @@ func (p *Path) IsZero() bool {
 	return p.totalLength == 0
 }
 
-// stateAtDistance returns the state which is `distance` far from `start` state.
-func (p *Path) stateAtDistance(start State, distance float64) StateWithDirection {
+// sample returns the state which is `distance` far from `origin` state.
+func (p *Path) sample(distance float64) StateWithDirection {
 	if distance <= 0 {
 		return StateWithDirection{
-			State:     start,
+			State:     p.origin,
 			Direction: p.segments[0].Direction(),
 		}
 	}
@@ -138,6 +138,7 @@ func (p *Path) stateAtDistance(start State, distance float64) StateWithDirection
 	distance = min(distance, p.Length())
 
 	var direction Direction
+	start := p.origin
 
 	for _, segment := range p.segments {
 		direction = segment.Direction()
