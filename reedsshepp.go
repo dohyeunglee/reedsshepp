@@ -123,7 +123,7 @@ func (p *Path) Interpolate(stepSize float64) []StateWithDirection {
 
 // IsZero checks whether `Path` is default(zero) value.
 func (p *Path) IsZero() bool {
-	return len(p.segments) == 0
+	return p.totalLength == 0
 }
 
 // stateAtDistance returns the state which is `distance` far from `start` state.
@@ -251,6 +251,10 @@ func MinLengthPath(start State, goal State, turningRadius float64) (Path, bool) 
 
 // AvailablePaths returns all possible ReedsSheppPaths that can reach the `goal` state from the `start` state, given a `turningRadius`.
 func AvailablePaths(start State, goal State, turningRadius float64) []Path {
+	if turningRadius <= 0 {
+		panic("turningRadius must be greater than 0")
+	}
+
 	dx := goal.X - start.X
 	dy := goal.Y - start.Y
 	dth := goal.Yaw - start.Yaw
@@ -258,6 +262,10 @@ func AvailablePaths(start State, goal State, turningRadius float64) []Path {
 	s := math.Sin(start.Yaw)
 	x := c*dx + s*dy
 	y := -s*dx + c*dy
+
+	if x == 0 && y == 0 && dth == 0 {
+		return []Path{}
+	}
 
 	paths := reedsSheppPaths(x/turningRadius, y/turningRadius, dth)
 	for i := range paths {
