@@ -89,10 +89,6 @@ func lpSpLp(x float64, y float64, phi float64) (t float64, u float64, v float64,
 	if t >= -zero {
 		v = mod2pi(phi - t)
 		if v >= -zero {
-			// TODO: assertion
-			// assert(fabs(u * cos(t) + sin(phi) - x) < RS_EPS);
-			// assert(fabs(u * sin(t) - cos(phi) + 1 - y) < RS_EPS);
-			// assert(fabs(mod2pi(t + v - phi)) < RS_EPS);
 			ok = true
 		}
 	}
@@ -108,10 +104,6 @@ func lpSpRp(x float64, y float64, phi float64) (t float64, u float64, v float64,
 		theta := math.Atan2(2, u)
 		t = mod2pi(t1 + theta)
 		v = mod2pi(t - phi)
-		// TODO: assertion
-		// assert(fabs(2 * sin(t) + u * cos(t) - sin(phi) - x) < RS_EPS);
-		// assert(fabs(-2 * cos(t) + u * sin(t) + cos(phi) + 1 - y) < RS_EPS);
-		// assert(fabs(mod2pi(t - v - phi)) < RS_EPS);
 		ok = t >= -zero && v >= -zero
 	}
 	return
@@ -158,10 +150,6 @@ func lpRmL(x float64, y float64, phi float64) (t float64, u float64, v float64, 
 		u = -2 * math.Asin(0.25*u1)
 		t = mod2pi(theta + 0.5*u + math.Pi)
 		v = mod2pi(phi - t + u)
-		// TODO: assertion
-		// assert(fabs(2 * (sin(t) - sin(t - u)) + sin(phi) - x) < RS_EPS);
-		// assert(fabs(2 * (-cos(t) + cos(t - u)) - cos(phi) + 1 - y) < RS_EPS);
-		// assert(fabs(mod2pi(t - u + v - phi)) < RS_EPS);
 		ok = t >= -zero && u <= zero
 	}
 	return
@@ -210,10 +198,6 @@ func lpRupLumRm(x float64, y float64, phi float64) (t float64, u float64, v floa
 	if rho <= 1 {
 		u = math.Acos(rho)
 		t, v = tauOmega(u, -u, xi, eta, phi)
-		// TODO: assertion
-		// assert(fabs(2 * (sin(t) - sin(t - u) + sin(t - 2 * u)) - sin(phi) - x) < RS_EPS);
-		// assert(fabs(2 * (-cos(t) + cos(t - u) - cos(t - 2 * u)) + cos(phi) + 1 - y) < RS_EPS);
-		// assert(fabs(mod2pi(t - 2 * u - v - phi)) < RS_EPS);
 		ok = t >= -zero && v <= zero
 	}
 	return
@@ -276,10 +260,6 @@ func lpRmSmLm(x float64, y float64, phi float64) (t float64, u float64, v float6
 		u = 2 - r
 		t = mod2pi(theta + math.Atan2(r, -2))
 		v = mod2pi(phi - halfPi - t)
-		// TODO: assertion
-		// assert(fabs(2 * (sin(t) - cos(t)) - u * sin(t) + sin(phi) - x) < RS_EPS);
-		// assert(fabs(-2 * (sin(t) + cos(t)) + u * cos(t) - cos(phi) + 1 - y) < RS_EPS);
-		// assert(fabs(mod2pi(t + pi / 2 + v - phi)) < RS_EPS);
 		ok = t >= -zero && u <= zero && v <= zero
 	}
 	return
@@ -294,10 +274,6 @@ func lpRmSmRm(x float64, y float64, phi float64) (t float64, u float64, v float6
 		t = theta
 		u = 2 - rho
 		v = mod2pi(t + halfPi - phi)
-		// TODO: assertion
-		// assert(fabs(2*sin(t)-cos(t-v)-u*sin(t) - x) < RS_EPS);
-		// assert(fabs(-2*cos(t)-sin(t-v)+u*cos(t)+1 - y) < RS_EPS);
-		// assert(fabs(mod2pi(t+pi/2-v-phi)) < RS_EPS);
 		ok = t >= -zero && u <= zero && v <= zero
 	}
 	return
@@ -374,10 +350,6 @@ func lpRmSLmRp(x float64, y float64, phi float64) (t float64, u float64, v float
 		if u <= zero {
 			t = mod2pi(math.Atan2((4-u)*xi-2*eta, -2*xi+(u-4)*eta))
 			v = mod2pi(t - phi)
-			// TODO: assertion
-			// assert(fabs(4 * sin(t) - 2 * cos(t) - u * sin(t) - sin(phi) - x) < RS_EPS);
-			// assert(fabs(-4 * cos(t) - 2 * sin(t) + u * cos(t) + cos(phi) + 1 - y) < RS_EPS);
-			// assert(fabs(mod2pi(t - v - phi)) < RS_EPS);
 			ok = t >= -zero && v >= -zero
 		}
 	}
