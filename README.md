@@ -14,7 +14,7 @@ Visit https://pkg.go.dev/github.com/dohyeunglee/reedsshepp
 An example is available in [example/main.go](example/main.go)
 
 ## Demo
-A demo with plot is available in [demo/main.go](demo/main.go)
+A demo with plot is available in [demo](demo/README.md)
 
 ## Test
 ```bash

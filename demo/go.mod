@@ -2,10 +2,10 @@ module github.com/dohyeunglee/reedsshepp/demo
 
 go 1.22.3
 
-replace github.com/dohyeunglee/reedsshepp v0.0.0-20240529011855-610b810b97e2 => ../
+replace github.com/dohyeunglee/reedsshepp v0.0.1 => ../
 
 require (
-	github.com/dohyeunglee/reedsshepp v0.0.0-20240529011855-610b810b97e2
+	github.com/dohyeunglee/reedsshepp v0.0.1
 	gonum.org/v1/plot v0.14.0
 )
 

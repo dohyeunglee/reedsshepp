@@ -151,7 +151,11 @@ func plotPath(p *plot.Plot, states []reedsshepp.StateWithDirection) {
 
 func main() {
 	for i, example := range examples {
-		path, _ := reedsshepp.MinLengthPath(example.Start, example.Goal, turningRadius)
+		path, ok := reedsshepp.MinLengthPath(example.Start, example.Goal, turningRadius)
+		if !ok {
+			panic("MinLengthPath fail")
+		}
+
 		interpolated := path.Interpolate(stepSize)
 
 		p := plot.New()
