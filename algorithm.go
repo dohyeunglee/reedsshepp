@@ -52,24 +52,24 @@ var (
 	epsilon         = math.Nextafter(1, 2) - 1 // C++ std::numeric_limits<double>::epsilon()
 	zero            = 10 * epsilon
 	pathCourseTypes = [18][5]PathCourseType{
-		{CourseTypeLeft, CourseTypeRight, CourseTypeLeft, CourseTypeNone, CourseTypeNone},      // 0
-		{CourseTypeRight, CourseTypeLeft, CourseTypeRight, CourseTypeNone, CourseTypeNone},     // 1
-		{CourseTypeLeft, CourseTypeRight, CourseTypeLeft, CourseTypeRight, CourseTypeNone},     // 2
-		{CourseTypeRight, CourseTypeLeft, CourseTypeRight, CourseTypeLeft, CourseTypeNone},     // 3
-		{CourseTypeLeft, CourseTypeRight, CourseTypeStraight, CourseTypeLeft, CourseTypeNone},  // 4
-		{CourseTypeRight, CourseTypeLeft, CourseTypeStraight, CourseTypeRight, CourseTypeNone}, // 5
-		{CourseTypeLeft, CourseTypeStraight, CourseTypeRight, CourseTypeLeft, CourseTypeNone},  // 6
-		{CourseTypeRight, CourseTypeStraight, CourseTypeLeft, CourseTypeRight, CourseTypeNone}, // 7
-		{CourseTypeLeft, CourseTypeRight, CourseTypeStraight, CourseTypeRight, CourseTypeNone}, // 8
-		{CourseTypeRight, CourseTypeLeft, CourseTypeStraight, CourseTypeLeft, CourseTypeNone},  // 9
-		{CourseTypeRight, CourseTypeStraight, CourseTypeRight, CourseTypeLeft, CourseTypeNone}, // 10
-		{CourseTypeLeft, CourseTypeStraight, CourseTypeLeft, CourseTypeRight, CourseTypeNone},  // 11
-		{CourseTypeLeft, CourseTypeStraight, CourseTypeRight, CourseTypeNone, CourseTypeNone},  // 12
-		{CourseTypeRight, CourseTypeStraight, CourseTypeLeft, CourseTypeNone, CourseTypeNone},  // 13
-		{CourseTypeLeft, CourseTypeStraight, CourseTypeLeft, CourseTypeNone, CourseTypeNone},   // 14
-		{CourseTypeRight, CourseTypeStraight, CourseTypeRight, CourseTypeNone, CourseTypeNone}, // 15
-		{CourseTypeLeft, CourseTypeRight, CourseTypeStraight, CourseTypeLeft, CourseTypeRight}, // 16
-		{CourseTypeRight, CourseTypeLeft, CourseTypeStraight, CourseTypeRight, CourseTypeLeft}, // 17
+		{CourseTypeLeft, CourseTypeRight, CourseTypeLeft, CourseTypeNone, CourseTypeNone},      // 0(LRL)
+		{CourseTypeRight, CourseTypeLeft, CourseTypeRight, CourseTypeNone, CourseTypeNone},     // 1(RLR)
+		{CourseTypeLeft, CourseTypeRight, CourseTypeLeft, CourseTypeRight, CourseTypeNone},     // 2(LRLR)
+		{CourseTypeRight, CourseTypeLeft, CourseTypeRight, CourseTypeLeft, CourseTypeNone},     // 3(RLRL)
+		{CourseTypeLeft, CourseTypeRight, CourseTypeStraight, CourseTypeLeft, CourseTypeNone},  // 4(LRSL)
+		{CourseTypeRight, CourseTypeLeft, CourseTypeStraight, CourseTypeRight, CourseTypeNone}, // 5(RLSR)
+		{CourseTypeLeft, CourseTypeStraight, CourseTypeRight, CourseTypeLeft, CourseTypeNone},  // 6(LSRL)
+		{CourseTypeRight, CourseTypeStraight, CourseTypeLeft, CourseTypeRight, CourseTypeNone}, // 7(RSLR)
+		{CourseTypeLeft, CourseTypeRight, CourseTypeStraight, CourseTypeRight, CourseTypeNone}, // 8(LRSR)
+		{CourseTypeRight, CourseTypeLeft, CourseTypeStraight, CourseTypeLeft, CourseTypeNone},  // 9(RLSL)
+		{CourseTypeRight, CourseTypeStraight, CourseTypeRight, CourseTypeLeft, CourseTypeNone}, // 10(RSRL)
+		{CourseTypeLeft, CourseTypeStraight, CourseTypeLeft, CourseTypeRight, CourseTypeNone},  // 11(LSLR)
+		{CourseTypeLeft, CourseTypeStraight, CourseTypeRight, CourseTypeNone, CourseTypeNone},  // 12(LSR)
+		{CourseTypeRight, CourseTypeStraight, CourseTypeLeft, CourseTypeNone, CourseTypeNone},  // 13(RSL)
+		{CourseTypeLeft, CourseTypeStraight, CourseTypeLeft, CourseTypeNone, CourseTypeNone},   // 14(LSL)
+		{CourseTypeRight, CourseTypeStraight, CourseTypeRight, CourseTypeNone, CourseTypeNone}, // 15(RSR)
+		{CourseTypeLeft, CourseTypeRight, CourseTypeStraight, CourseTypeLeft, CourseTypeRight}, // 16(LRSLR)
+		{CourseTypeRight, CourseTypeLeft, CourseTypeStraight, CourseTypeRight, CourseTypeLeft}, // 17(RLSRL)
 	}
 )
 

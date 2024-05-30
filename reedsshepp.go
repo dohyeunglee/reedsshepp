@@ -24,27 +24,14 @@ func (d Direction) String() string {
 }
 
 // PathCourseType represents ReedsSheppPath segment course type: L, S, R.
-type PathCourseType int
+type PathCourseType string
 
 const (
-	CourseTypeNone PathCourseType = iota
-	CourseTypeLeft
-	CourseTypeStraight
-	CourseTypeRight
+	CourseTypeNone     PathCourseType = "None"
+	CourseTypeLeft     PathCourseType = "L"
+	CourseTypeStraight PathCourseType = "S"
+	CourseTypeRight    PathCourseType = "R"
 )
-
-func (t PathCourseType) String() string {
-	switch t {
-	case CourseTypeLeft:
-		return "L"
-	case CourseTypeStraight:
-		return "S"
-	case CourseTypeRight:
-		return "R"
-	default:
-		return "None"
-	}
-}
 
 // State represents the 3D state, x, y coordinate and yaw angle.
 type State struct {
@@ -73,7 +60,7 @@ type PathSegment struct {
 }
 
 func (s PathSegment) String() string {
-	return fmt.Sprintf("%v(%s)", s.Length, s.CourseType.String())
+	return fmt.Sprintf("%v(%s)", s.Length, s.CourseType)
 }
 
 // Direction returns `Direction` information(forward or backward) about the segment.
