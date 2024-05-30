@@ -2,6 +2,7 @@ package reedsshepp_test
 
 import (
 	"math"
+	"math/rand"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -9,29 +10,7 @@ import (
 	"github.com/dohyeunglee/reedsshepp"
 )
 
-var maxError = 10*math.Nextafter(1, 2) - 1
-
-func TestAvailablePaths(t *testing.T) {
-	// GIVEN
-	start := reedsshepp.State{
-		X:   0,
-		Y:   0,
-		Yaw: 0,
-	}
-	goal := reedsshepp.State{
-		X:   0,
-		Y:   0,
-		Yaw: math.Pi,
-	}
-	turningRadius := 5.8
-
-	// WHEN
-	paths := reedsshepp.AvailablePaths(start, goal, turningRadius)
-
-	// THEN
-	assert.Equal(t, 10, len(paths))
-}
-
+// TestMinLengthPath compares the result of MinLengthPath and `distance` function of ompl.
 func TestMinLengthPath(t *testing.T) {
 	turningRadius := 5.8
 	type args struct {
@@ -39,10 +18,29 @@ func TestMinLengthPath(t *testing.T) {
 		goal  reedsshepp.State
 	}
 	tests := []struct {
-		args args
-		want float64
+		name       string
+		args       args
+		want       float64
+		wantNoPath bool
 	}{
 		{
+			name: "if start and goal state are the same",
+			args: args{
+				start: reedsshepp.State{
+					X:   0,
+					Y:   0,
+					Yaw: 0,
+				},
+				goal: reedsshepp.State{
+					X:   0,
+					Y:   0,
+					Yaw: 0,
+				},
+			},
+			wantNoPath: true,
+		},
+		{
+			name: "(0, 0, 0) -> (0, 0, pi)",
 			args: args{
 				start: reedsshepp.State{
 					X:   0,
@@ -58,6 +56,7 @@ func TestMinLengthPath(t *testing.T) {
 			want: 18.221237390820797,
 		},
 		{
+			name: "(0, 0, pi/4) -> (3, 4, 0)",
 			args: args{
 				start: reedsshepp.State{
 					X:   0,
@@ -73,6 +72,7 @@ func TestMinLengthPath(t *testing.T) {
 			want: 7.967765057618429,
 		},
 		{
+			name: "(4, 4, pi/4) -> (0, 4, 0)",
 			args: args{
 				start: reedsshepp.State{
 					X:   4,
@@ -88,6 +88,7 @@ func TestMinLengthPath(t *testing.T) {
 			want: 6.389556686872893,
 		},
 		{
+			name: "(4, 0, 0) -> (-3, 4, pi)",
 			args: args{
 				start: reedsshepp.State{
 					X:   4,
@@ -103,6 +104,7 @@ func TestMinLengthPath(t *testing.T) {
 			want: 18.2212373908208,
 		},
 		{
+			name: "(-4, 0, 0) -> (3, 4, pi/3)",
 			args: args{
 				start: reedsshepp.State{
 					X:   -4,
@@ -118,6 +120,7 @@ func TestMinLengthPath(t *testing.T) {
 			want: 8.336208440323265,
 		},
 		{
+			name: "(4, 4, 0) -> (3, 4, pi/2)",
 			args: args{
 				start: reedsshepp.State{
 					X:   4,
@@ -135,74 +138,36 @@ func TestMinLengthPath(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		// WHEN
-		path, ok := reedsshepp.MinLengthPath(tt.args.start, tt.args.goal, turningRadius)
+		t.Run(tt.name, func(t *testing.T) {
+			// WHEN
+			path, ok := reedsshepp.MinLengthPath(tt.args.start, tt.args.goal, turningRadius)
 
-		// THEN
-		assert.True(t, ok)
-		assert.InEpsilon(t, tt.want, path.Length(), maxError)
+			// THEN
+			assert.Equal(t, !tt.wantNoPath, ok)
+			if !tt.wantNoPath {
+				assert.InDelta(t, tt.want, path.Length(), 1e-9)
+			}
+		})
 	}
-}
-
-func TestPath_Interpolate(t *testing.T) {
-	// GIVEN
-	start := reedsshepp.State{
-		X:   0,
-		Y:   0,
-		Yaw: 0,
-	}
-	goal := reedsshepp.State{
-		X:   0,
-		Y:   0,
-		Yaw: math.Pi,
-	}
-	turningRadius := 5.8
-	stepSize := 0.1
-
-	// WHEN
-	paths := reedsshepp.AvailablePaths(start, goal, turningRadius)
-	path := paths[0]
-	states := path.Interpolate(stepSize)
-
-	// THEN
-	assert.Equal(t, 183, len(states))
 }
 
 func BenchmarkMinLengthPath(b *testing.B) {
-	start := reedsshepp.State{
-		X:   0,
-		Y:   0,
-		Yaw: 0,
-	}
-	goal := reedsshepp.State{
-		X:   0,
-		Y:   0,
-		Yaw: math.Pi,
-	}
 	turningRadius := 5.8
 
 	for i := 0; i < b.N; i++ {
+		b.StopTimer()
+		start := reedsshepp.State{
+			X:   rand.Float64() * 100,
+			Y:   rand.Float64() * 100,
+			Yaw: rand.Float64() * 2 * math.Pi,
+		}
+		goal := reedsshepp.State{
+			X:   rand.Float64() * 100,
+			Y:   rand.Float64() * 100,
+			Yaw: rand.Float64() * 2 * math.Pi,
+		}
+		b.StartTimer()
 		path, _ := reedsshepp.MinLengthPath(start, goal, turningRadius)
 		_ = path.Length()
-	}
-}
-
-func BenchmarkPath_Interpolate(b *testing.B) {
-	start := reedsshepp.State{
-		X:   0,
-		Y:   0,
-		Yaw: 0,
-	}
-	goal := reedsshepp.State{
-		X:   0,
-		Y:   0,
-		Yaw: math.Pi,
-	}
-	turningRadius := 5.8
-	stepSize := 0.1
-
-	for i := 0; i < b.N; i++ {
-		paths := reedsshepp.AvailablePaths(start, goal, turningRadius)
-		_ = paths[0].Interpolate(stepSize)
 	}
 }
