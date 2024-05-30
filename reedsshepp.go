@@ -53,10 +53,18 @@ type State struct {
 	Yaw float64
 }
 
+func (s State) String() string {
+	return fmt.Sprintf("(%v, %v, %v)", s.X, s.Y, s.Yaw)
+}
+
 // StateWithDirection represents `State` information with `Direction`.
 type StateWithDirection struct {
 	State
 	Direction Direction
+}
+
+func (s StateWithDirection) String() string {
+	return fmt.Sprintf("(%v, %v, %v, %s)", s.X, s.Y, s.Yaw, s.Direction.String())
 }
 
 type PathSegment struct {
