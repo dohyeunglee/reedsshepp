@@ -10,13 +10,16 @@ go get github.com/dohyeunglee/reedsshepp
 ## API
 Visit https://pkg.go.dev/github.com/dohyeunglee/reedsshepp
 
+## Example
+An example is available in [cmd/main.go](cmd/main.go)
+
+## Demo
+A demo is available in [demo/main.go](demo/main.go)
+
 ## Test
 ```bash
 go test
 ```
-
-## Demo
-A demo is available in [demo/main.go](demo/main.go)
 
 ## Benchmark
 ```bash
