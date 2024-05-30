@@ -11,7 +11,7 @@ go get github.com/dohyeunglee/reedsshepp
 Visit https://pkg.go.dev/github.com/dohyeunglee/reedsshepp
 
 ## Example
-An example is available in [cmd/main.go](cmd/main.go)
+An example is available in [example/main.go](example/main.go)
 
 ## Demo
 A demo is available in [demo/main.go](demo/main.go)
