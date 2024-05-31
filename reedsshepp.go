@@ -108,11 +108,6 @@ func (p *Path) Interpolate(stepSize float64) []StateWithDirection {
 	return states
 }
 
-// IsZero checks whether `Path` is default(zero) value.
-func (p *Path) IsZero() bool {
-	return p.totalLength == 0
-}
-
 // sample returns the state which is `distance` far from `origin` state.
 func (p *Path) sample(distance float64) StateWithDirection {
 	if distance <= 0 {
@@ -259,7 +254,7 @@ func AvailablePaths(start State, goal State, turningRadius float64) []Path {
 	result := make([]Path, 0, len(paths))
 	for _, path := range paths {
 		path.setTurningRadius(turningRadius)
-		if path.IsZero() {
+		if path.Length() == 0 {
 			continue
 		}
 		path.origin = start
